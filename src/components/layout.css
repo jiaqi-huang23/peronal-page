@@ -25,10 +25,15 @@ body {
   min-height: calc(100vh);
 }
 
-#content {
+#content-container {
   margin: 150px 30px 50px 50px;
 	flex-grow:1;
   vertical-align: top;
+}
+
+#content {
+  float: center;
+  padding-left: 30%;
 }
 
 #footer {
@@ -42,7 +47,6 @@ figcaption,
 figure,
 footer,
 header,
-main,
 menu,
 nav,
 section,
@@ -72,7 +76,7 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 a:active,
-a.visited ,
+a.visited,
 a.link {
   text-decoration: none;
 }

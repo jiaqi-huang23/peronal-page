@@ -40,18 +40,22 @@ const Layout = ({ children }) => {
         <div id="sidebar">
           <Sidebar />
         </div>
-        <div id="content">
+        <div id="content-container">
+          <div id='content'>
           <main>
             {edges.map(edge => {
               const { frontmatter } = edge.node
               return (
-                <div key={frontmatter.path} style={{ marginBottom: "Irem" }}>
-                  <Link to={frontmatter.path}>{frontmatter.title} </Link>-{" "}
+                <div key={frontmatter.path} style={{ marginBottom: "Irem" , paddingTop:"20px"}}>
+                  <Link to={frontmatter.path} 
+                  style={{fontSize: "25px", fontFamily:"Merriweather, Impact, Serif"}}>
+                  {frontmatter.title} </Link>-{" "}
                   {frontmatter.date}
                 </div>
               )
             })}
           </main>
+          </div>
         </div>
       </div>
       <footer id='footer'>
