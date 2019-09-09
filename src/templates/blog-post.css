@@ -1,8 +1,38 @@
-.blogpost {
-    background-color: bisque;
-    padding: 100px 100px 100px 100px;
+#post-container {
+    display: block;
+    height: 100%;
+    widows: 100%;
 }
 
-h1 {
+.blogpost {
+    display: block;
+    height: 100%;
+    widows: 100%;
+    background-color: rgb(243,243,243);
+}
+
+.blogpost .content {
+    float:center;
+    padding: 10% 20% 20% 20%;
+}
+#post-container #title {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(36, 36,36);
+}
+
+.blogpost h1 {
+    margin-top: 20px;
+}
+#post-container h5 {
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+#prev {
+    float:left;
+    padding: 30px 20% 10px 20%;
+}
+
+#next {
+    float: right;
+    padding: 30px 20% 10px 20%;
 }

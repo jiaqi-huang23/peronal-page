@@ -8,6 +8,33 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+#outer-container {
+	display: flex;
+  margin:0;
+  align-content: end;
+  background-color: rgb(243,243,243);
+}
+
+#sidebar {
+	/* Give the sidebar a default width, and prevent it from shrinking */
+  flex-shrink:0;
+  width:280px;
+  vertical-align: top;
+  background-image: linear-gradient(rgb(39, 70, 126),rgb(139, 179, 243));
+  min-height: calc(100vh);
+}
+
+#content {
+  margin: 150px 30px 50px 50px;
+	flex-grow:1;
+  vertical-align: top;
+}
+
+#footer {
+  float: right;
+  padding-right: 20px;
+}
 article,
 aside,
 details,
@@ -41,15 +68,21 @@ template {
 }
 a {
   background-color: transparent;
+  text-decoration: none;
   -webkit-text-decoration-skip: objects;
 }
 a:active,
+a.visited ,
+a.link {
+  text-decoration: none;
+}
 a:hover {
   outline-width: 0;
+  
 }
 abbr[title] {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration: underline dotted;
 }
 b,

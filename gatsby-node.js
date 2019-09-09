@@ -13,47 +13,82 @@ exports.createPages = async ({graphql, actions, reporters}) => {
     const result = await graphql(
         `
         query {
-            allMarkdownRemark(limit: 1000, sort: {fields: [frontmatter___date]}) {
-              edges {
-                next{
-                  frontmatter {
-                    path
-                  }
+          posts: allMarkdownRemark (sort: {fields: [frontmatter___date]}, filter: {frontmatter: {
+            tags: {eq: "post"}
+          }}){
+            edges {
+              next {
+                frontmatter {
+                  path
                 }
-                previous {
-                  frontmatter {
-                    path
-                  }
+              }
+              previous {
+                frontmatter {
+                  path
                 }
-                node {
-                  frontmatter {
-                    path
-                  }
+              }
+              node {
+                frontmatter {
+                  date
+                  title
+                  path
+                  tags
                 }
               }
             }
+          }
+          
+          other: allMarkdownRemark (filter: {frontmatter: {
+            tags: {ne: "post"}
+          }}){
+            edges {
+              node {
+                frontmatter {
+                  date
+                  title
+                  path
+                  tags
+                }
+              }
+            }
+          }
+          
           }
         `
     );
     //handle errors
     if(result.errors) {
         if (result.errors) {
-            reporter.panicOnBuild(`Error while running GraphQL query.`);
+            reporters.panicOnBuild(`Error while running GraphQL query.`);
             return;
           }
     }
+    console.log(JSON.stringify(result.data));
     //create pages for each markdown files.
     const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
-    result.data.allMarkdownRemark.edges.forEach(({node, next, previous}) => {
+    const amboutMeTemplate = path.resolve(`src/templates/blog-post.js`);
+    result.data.posts.edges.forEach(({node, next, previous}) => {
         const path = node.frontmatter.path;
-        createPage({
+       
+          createPage({
             path,
             component: blogPostTemplate,
             context: {
                 pathSlug: path,
-                next: next,
+                next,
                 prev: previous,
             }
         })
-    })
+    });
+    result.data.other.edges.forEach(({node}) => {
+      const path = node.frontmatter.path;
+        createPage({
+          path,
+          component: amboutMeTemplate,
+          context: {
+              pathSlug: path,
+          }
+      })
+  });
+
 }
