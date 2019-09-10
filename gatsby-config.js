@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   siteMetadata: {
     title: `My Blog I`,
@@ -14,6 +16,23 @@ module.exports = {
       },
     },
     `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-source-mongodb`,
+      options: { 
+        dbName: `mongo`, 
+        connectionString: process.env.MONGO_DB_URL,
+        // auth: {
+        //   user: process.env.MONGO_USER,
+        //   password: 'xiaotiao88'
+        // },
+        clientOptions: {
+          useUnifiedTopology: true,
+          useNewUrlParser: true
+        },
+        collection: `documents`,
+        map: { documents: { description: `text/markdown` } }
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

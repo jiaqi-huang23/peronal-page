@@ -73,12 +73,13 @@ template {
 a {
   background-color: transparent;
   text-decoration: none;
-  -webkit-text-decoration-skip: objects;
+  /* -webkit-text-decoration-skip: objects; */
 }
 a:active,
-a.visited,
-a.link {
+a:visited,
+a:link {
   text-decoration: none;
+  color:inherit;
 }
 a:hover {
   outline-width: 0;
