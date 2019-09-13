@@ -1,6 +1,6 @@
 import React from "react"
 import resource from "../../resources"
-import { Link, useStaticQuery} from "gatsby"
+import { Link, useStaticQuery, graphql} from "gatsby"
 
 const avatarStyle = {
   borderRadius: "70%",
@@ -28,24 +28,19 @@ const Sidebar = props => {
     console.log(props);
     const data = useStaticQuery(graphql`
     query {
-        allMarkdownRemark (filter: {frontmatter: {
-          tags: {ne: "post"}
-        }}){
+        allMarkdownRemark {
           edges {
             node {
               frontmatter {
-                date
                 title
                 path
-                tags
               }
             }
           }
         }
       }
   `)
-  const edges = data.allMarkdownRemark.edges;
-  console.log(edges);
+  const aboutmePagePath = data.allMarkdownRemark.edges[0].node.frontmatter.path;
   return (
     <div>
       <img src={resource.avatar} style={avatarStyle} />
@@ -53,7 +48,7 @@ const Sidebar = props => {
         <li style={itemStyle}><Link to='/'>Blogs</Link></li>
         <li style={itemStyle}>Projects</li>
         <li style={itemStyle}>
-          <Link to={edges[0].node.frontmatter.path}>About Me</Link>
+          <Link to={aboutmePagePath}>About Me</Link>
         </li>
       </ul>
     </div>

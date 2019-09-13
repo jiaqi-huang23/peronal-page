@@ -2,11 +2,26 @@ import React from 'react'
 import './blog-post.css'
 import { graphql, Link } from 'gatsby'
 
+const md = require('markdown-it')({
+  html: true,
+linkify: true,
+typographer: true
+});
+
+
+/**
+ * 
+ * @todo format createdDate 
+ */
 const Template = ({ data, pageContext }) => {
+  
   console.log(pageContext)
-  const frontmatter = data.markdownRemark.frontmatter
-  const html = data.markdownRemark.html
-  const { next, prev } = pageContext
+
+
+  const { prevPath, nextPath } = pageContext;
+  const { content, createdDate, title } = data.mongodbTestPosts;
+  const html = md.render(content);
+  console.log(html);
   return (
     <div id="post-container">
       <h1>
@@ -15,17 +30,15 @@ const Template = ({ data, pageContext }) => {
       <div className="blogpost">
         <div className="navi">
           <div id="prev">
-            {prev && <Link to={prev.frontmatter.path}>Previous Post</Link>}
+            {prevPath && <Link to={prevPath}>Previous Post</Link>}
           </div>
           <div id="next">
-            {next && <Link to={next.frontmatter.path}>Next Post</Link>}
+            {nextPath && <Link to={nextPath}>Next Post</Link>}
           </div>
         </div>
-        <div></div>
         <div className="content">
-        <h1 id="title">{frontmatter.title}</h1>
-          <h5>{frontmatter.date}</h5>
-
+        <h1 id="title">{title}</h1>
+          <h5>{createdDate}</h5>
           <div dangerouslySetInnerHTML={{ __html: html }}></div>
         </div>
       </div>
@@ -34,16 +47,14 @@ const Template = ({ data, pageContext }) => {
 }
 
 export const query = graphql`
-    query ($pathSlug: String!) {
-        markdownRemark (frontmatter: {path: {eq: $pathSlug}}) {
-            frontmatter{
-                title
-                date
-            }
-            html
-            timeToRead
-            }
+  query mongopage($id:String!) {
+    mongodbTestPosts(id:{eq:$id}) {
+      id
+      createdDate
+      title
+      content
     }
-`
+  }
+`;
 
 export default Template;

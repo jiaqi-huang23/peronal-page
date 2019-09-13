@@ -21,6 +21,7 @@ module.exports = {
       options: { 
         dbName: `test`, 
         connectionString: process.env.MONGO_DB_URL,
+        extraParams: {ssl: true, authSource: `admin`},
         clientOptions: {
           useUnifiedTopology: true,
           useNewUrlParser: true

@@ -11,28 +11,29 @@ import { useStaticQuery, graphql, Link } from "gatsby"
 import Sidebar from "./sidebar"
 import "./layout.css"
 
+/**
+ * 
+ * @todo format createdDate 
+ */
+
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
-    query posts {
-      allMarkdownRemark (sort: {order:[DESC], fields: [frontmatter___date]}, filter: {frontmatter: {tags: {eq: "post"}}}){
+    query {
+      allMongodbTestPosts {
         edges {
           node {
-            frontmatter {
-              title
-              path
-              date
-              tags
-              excerpt
-            }
-            html
+          id
+          createdDate
+          title
+          content
           }
         }
       }
     }
-  `)
-  //console.log(data);
+  `);
+  console.log(data);
 
-  const { edges } = data.allMarkdownRemark
+  const { edges } = data.allMongodbTestPosts;
 
   return (
     <>
@@ -44,13 +45,14 @@ const Layout = ({ children }) => {
           <div id='content'>
           <main>
             {edges.map(edge => {
-              const { frontmatter } = edge.node
+              const { id, title, createdDate } = edge.node;
+              const path = `post-${id}`;
               return (
-                <div key={frontmatter.path} style={{ marginBottom: "Irem" , paddingTop:"20px"}}>
-                  <Link to={frontmatter.path} 
+                <div key={id} style={{ marginBottom: "Irem" , paddingTop:"20px"}}>
+                  <Link to={path} 
                   style={{fontSize: "25px", fontFamily:"Merriweather, Impact, Serif"}}>
-                  {frontmatter.title} </Link>-{" "}
-                  {frontmatter.date}
+                  {title} </Link>-{" "}
+                  {createdDate}
                 </div>
               )
             })}

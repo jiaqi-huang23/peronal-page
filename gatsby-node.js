@@ -10,50 +10,37 @@ const path = require('path');
 exports.createPages = async ({graphql, actions, reporters}) => {
     const { createPage } = actions;
     //query for markdown nodes to use in creating pages
-    const result = await graphql(
-        `
+    const result = await graphql(`
         query {
-          posts: allMarkdownRemark (sort: {fields: [frontmatter___date]}, filter: {frontmatter: {
-            tags: {eq: "post"}
-          }}){
+          posts: allMongodbTestPosts(sort: 
+            {fields: [createdDate], order:[ASC]}){
             edges {
-              next {
-                frontmatter {
-                  path
-                }
-              }
               previous {
-                frontmatter {
-                  path
-                }
+                id
               }
               node {
-                frontmatter {
-                  date
-                  title
-                  path
-                  tags
-                }
+                id
+                createdDate
+                title
+                content
+              }
+              next {
+                id
               }
             }
           }
           
-          other: allMarkdownRemark (filter: {frontmatter: {
-            tags: {ne: "post"}
-          }}){
+          other: allMarkdownRemark{
             edges {
               node {
                 frontmatter {
-                  date
                   title
                   path
-                  tags
                 }
               }
             }
           }
-          
-          }
+        }
         `
     );
     //handle errors
@@ -63,20 +50,23 @@ exports.createPages = async ({graphql, actions, reporters}) => {
             return;
           }
     }
-    console.log(JSON.stringify(result.data));
+    //console.log(JSON.stringify(result));
     //create pages for each markdown files.
     const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
-    const amboutMeTemplate = path.resolve(`src/templates/blog-post.js`);
+    const amboutMeTemplate = path.resolve(`src/templates/aboutMe.js`);
     result.data.posts.edges.forEach(({node, next, previous}) => {
-        const path = node.frontmatter.path;
-       
+        const path = `post-${node.id}` 
+        const id = node.id;
+        const nextPath = next == null ? null : `post-${next.id}`;
+        const prevPath = previous == null ? null : `post-${previous.id}`;
           createPage({
             path,
             component: blogPostTemplate,
             context: {
+                id,
                 pathSlug: path,
-                next,
-                prev: previous,
+                prevPath,
+                nextPath
             }
         })
     });

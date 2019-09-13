@@ -7,9 +7,10 @@ import {
     GraphQLSchema,
     GraphQLNonNull
  } from 'graphql'
+import db from './server';
 
 
-const PostType = new GraphQLObjectType({
+const Post = new GraphQLObjectType({
      name: 'Post',
      fields: {
         id: { type: GraphQLID },
@@ -20,11 +21,28 @@ const PostType = new GraphQLObjectType({
      }
  });
 
-const ReadPost = new GraphQLObjectType({
-    
-})
+
 const typeDefs =[`
     type Query {
-        post(_id: String): PostType
+        post(_id: String): ${Post}
+        posts:[${Post}]
     }
-`]
+    type Mutation {
+        createPost(title: String, content: String) : ${Post}
+    }
+    schema {
+        query: Query
+        mutation: Mutation
+    }
+`];
+
+const resolver = {
+    Query: {
+        post: async (root, {_id}) => {
+            return (await Posts.findOne(ObjectId(_id)));
+        },
+        posts: async () => {
+            return (await Posts.find({}).toArray());
+        }
+    }
+}

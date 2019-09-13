@@ -4,6 +4,7 @@
     widows: 100%;
 }
 
+.aboutme,
 .blogpost {
     display: block;
     height: 100%;
@@ -11,6 +12,8 @@
     background-color: rgb(243,243,243);
 }
 
+
+.aboutme .content,
 .blogpost .content {
     float:center;
     padding: 10% 20% 20% 20%;
