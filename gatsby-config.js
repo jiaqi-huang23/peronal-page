@@ -19,17 +19,13 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { 
-        dbName: `mongo`, 
+        dbName: `test`, 
         connectionString: process.env.MONGO_DB_URL,
-        // auth: {
-        //   user: process.env.MONGO_USER,
-        //   password: 'xiaotiao88'
-        // },
         clientOptions: {
           useUnifiedTopology: true,
           useNewUrlParser: true
         },
-        collection: `documents`,
+        collection: `posts`,
         map: { documents: { description: `text/markdown` } }
       },
     },

@@ -70,3 +70,6 @@ yarn-error.log
 
 #Post data
 src/pages
+
+#Misc
+resources.js
