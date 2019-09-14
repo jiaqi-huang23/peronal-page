@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import Sidebar from "./sidebar"
 import "./layout.css"
-
+const moment = require('moment');
 /**
  * 
  * @todo format createdDate 
@@ -47,12 +47,14 @@ const Layout = ({ children }) => {
             {edges.map(edge => {
               const { id, title, createdDate } = edge.node;
               const path = `post-${id}`;
+              const dateString = moment(createdDate).format("YYYY-MM-DD");
+              console.log(dateString);
               return (
                 <div key={id} style={{ marginBottom: "Irem" , paddingTop:"20px"}}>
                   <Link to={path} 
                   style={{fontSize: "25px", fontFamily:"Merriweather, Impact, Serif"}}>
                   {title} </Link>-{" "}
-                  {createdDate}
+                  {dateString}
                 </div>
               )
             })}
