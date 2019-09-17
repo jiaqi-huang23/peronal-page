@@ -1,1 +1,1 @@
-### Prototype
+Built with Gatsby.
