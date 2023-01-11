@@ -14,7 +14,7 @@
     "gatsby-plugin-sharp": "^2.2.20",
     "gatsby-source-filesystem": "^2.1.21",
     "gatsby-source-mongodb": "^2.1.12",
-    "gatsby-transformer-remark": "^2.6.21",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.2.13",
     "graphql": "^14.5.4",
     "markdown-it": "^10.0.0",
